@@ -26,8 +26,10 @@ class Node:
          - self includes node in self.neighbors
          - node includes self in node.neighbors (undirected)
         """
-        # TODO: Implement adding a neighbor in an undirected manner
-        pass
+        if (node in self.neighbors):
+            return
+        
+        self.neighbors.append(node)
 
     def __repr__(self):
         return f"Node({self.value})"
@@ -57,12 +59,63 @@ def parse_maze_to_graph(maze):
     # 2) Link each node with valid neighbors in four directions (undirected)
     # 3) Identify start_node (if (0,0) is open) and goal_node (if (rows-1, cols-1) is open)
 
-    # TODO: Implement the logic to build nodes and link neighbors
+    nodes_dict = {}
 
-    start_node = None
-    goal_node = None
+    for i in range(rows):
+        for j in range(cols):
+            state = maze[i][j]
+            if (state == 0):
+                # Create new node if not in nodes_dict, otherwise retrieve existing node
+                node = None
+                if (nodes_dict.get((i,j)) != None):
+                    node = nodes_dict.get((i,j))
+                else:
+                    node = Node((i,j))
+                    nodes_dict[(i,j)] = node
+
+                # Top neighbor
+                if (i > 0 and maze[i-1][j] == 0):
+                    # Get neighbor node if existing, else create new node for it
+                    neighbor = nodes_dict.get((i-1, j))
+                    if (neighbor == None):
+                        neighbor = Node((i-1, j))
+                        nodes_dict[(i-1, j)] = neighbor
+                        
+                    node.add_neighbor(neighbor)
+
+                # Bottom neighbor
+                if (i < rows - 1 and maze[i+1][j] == 0):
+                    # Get neighbor node if existing, else create new node for it
+                    neighbor = nodes_dict.get((i+1, j))
+                    if (neighbor == None):
+                        neighbor = Node((i+1, j))
+                        nodes_dict[(i+1, j)] = neighbor
+
+                    node.add_neighbor(Node((i+1, j)))
+
+                # Left neighbor
+                if (j > 0 and maze[i][j-1] == 0):
+                    # Get neighbor node if existing, else create new node for it
+                    neighbor = nodes_dict.get((i, j-1))
+                    if (neighbor == None):
+                        neighbor = Node((i, j-1))
+                        nodes_dict[(i, j-1)] = neighbor
+                        
+                    node.add_neighbor(Node((j, j-1)))
+
+                # Right neighbor
+                if (j < cols - 1 and maze[i][j+1] == 0):
+                    # Get neighbor node if existing, else create new node for it
+                    neighbor = nodes_dict.get((i, j+1))
+                    if (neighbor == None):
+                        neighbor = Node((i, j+1))
+                        nodes_dict[(i, j+1)] = neighbor
+
+                    node.add_neighbor(Node((i, j+1)))
 
     # TODO: Assign start_node and goal_node if they exist in nodes_dict
+    start_node = nodes_dict.get((0, 0))
+    goal_node = nodes_dict.get((rows-1, cols-1))
 
     return nodes_dict, start_node, goal_node
 
@@ -82,7 +135,38 @@ def bfs(start_node, goal_node):
       3. Also track parent_map to reconstruct the path once goal_node is reached.
     """
     # TODO: Implement BFS
-    return None
+    queue = deque()
+    visited = []
+    parents = {}
+    queue.append((start_node, None))
+
+    # Run BFS until all nodes explored
+    while (len(queue) != 0):
+        # Use currNode and parentNode to track BFS state
+        next = queue.popleft()
+        currNode, parentNode = next[0], next[1]
+
+        visited.append(currNode)
+        parents[currNode] = parentNode
+
+        if (currNode == goal_node):
+            break
+
+        for neighbor in currNode.neighbors:
+            if (neighbor not in visited):
+                queue.append((neighbor, currNode))
+    
+    if currNode != goal_node:
+        return None
+    
+    # Reconstruct path
+    path = [goal_node.value]
+    currNode = goal_node
+    while (parents[currNode] != None):
+        prevNode = parents[currNode]
+        path.append(prevNode.value)
+        currNode = prevNode
+    return path
 
 
 ###############################################################################
