@@ -3,6 +3,7 @@ import random
 from collections import deque, defaultdict
 import heapq
 import numpy as np
+import time
 
 random.seed(42)
 
@@ -63,13 +64,10 @@ def parse_maze_to_graph(maze):
 
     for i in range(rows):
         for j in range(cols):
-            state = maze[i][j]
-            if (state == 0):
+            if (maze[i][j] == 0):
                 # Create new node if not in nodes_dict, otherwise retrieve existing node
-                node = None
-                if (nodes_dict.get((i,j)) != None):
-                    node = nodes_dict.get((i,j))
-                else:
+                node = nodes_dict.get((i,j))
+                if (node == None):
                     node = Node((i,j))
                     nodes_dict[(i,j)] = node
 
@@ -84,14 +82,14 @@ def parse_maze_to_graph(maze):
                     node.add_neighbor(neighbor)
 
                 # Bottom neighbor
-                if (i < rows - 1 and maze[i+1][j] == 0):
+                if (i < rows-1 and maze[i+1][j] == 0):
                     # Get neighbor node if existing, else create new node for it
                     neighbor = nodes_dict.get((i+1, j))
                     if (neighbor == None):
                         neighbor = Node((i+1, j))
                         nodes_dict[(i+1, j)] = neighbor
 
-                    node.add_neighbor(Node((i+1, j)))
+                    node.add_neighbor(neighbor)
 
                 # Left neighbor
                 if (j > 0 and maze[i][j-1] == 0):
@@ -101,19 +99,20 @@ def parse_maze_to_graph(maze):
                         neighbor = Node((i, j-1))
                         nodes_dict[(i, j-1)] = neighbor
                         
-                    node.add_neighbor(Node((j, j-1)))
+                    node.add_neighbor(neighbor)
 
                 # Right neighbor
-                if (j < cols - 1 and maze[i][j+1] == 0):
+                if (j < cols-1 and maze[i][j+1] == 0):
                     # Get neighbor node if existing, else create new node for it
                     neighbor = nodes_dict.get((i, j+1))
                     if (neighbor == None):
                         neighbor = Node((i, j+1))
                         nodes_dict[(i, j+1)] = neighbor
 
-                    node.add_neighbor(Node((i, j+1)))
+                    node.add_neighbor(neighbor)
+            else:
+                continue
 
-    # TODO: Assign start_node and goal_node if they exist in nodes_dict
     start_node = nodes_dict.get((0, 0))
     goal_node = nodes_dict.get((rows-1, cols-1))
 
@@ -134,8 +133,10 @@ def bfs(start_node, goal_node):
       2. Track visited nodes so you don’t revisit.
       3. Also track parent_map to reconstruct the path once goal_node is reached.
     """
-    # TODO: Implement BFS
-    queue = deque()
+    if (start_node == None or goal_node == None):
+        return None
+    
+    queue = []
     visited = []
     parents = {}
     queue.append((start_node, None))
@@ -143,8 +144,9 @@ def bfs(start_node, goal_node):
     # Run BFS until all nodes explored
     while (len(queue) != 0):
         # Use currNode and parentNode to track BFS state
-        next = queue.popleft()
+        next = queue.pop(0)
         currNode, parentNode = next[0], next[1]
+        print(currNode.value)
 
         visited.append(currNode)
         parents[currNode] = parentNode
@@ -153,20 +155,14 @@ def bfs(start_node, goal_node):
             break
 
         for neighbor in currNode.neighbors:
-            if (neighbor not in visited):
+            if (neighbor not in visited and (neighbor, currNode) not in queue):
                 queue.append((neighbor, currNode))
     
     if currNode != goal_node:
         return None
     
     # Reconstruct path
-    path = [goal_node.value]
-    currNode = goal_node
-    while (parents[currNode] != None):
-        prevNode = parents[currNode]
-        path.append(prevNode.value)
-        currNode = prevNode
-    return path
+    return reconstruct_path(goal_node, parents)
 
 
 ###############################################################################
@@ -183,8 +179,35 @@ def dfs(start_node, goal_node):
       2. Keep track of visited nodes to avoid cycles.
       3. Reconstruct path via parent_map if goal_node is found.
     """
-    # TODO: Implement DFS
-    return None
+    if (start_node == None or goal_node == None):
+        return None
+    
+    stack = list()
+    visited = []
+    parents = {}
+    stack.append((start_node, None))
+
+    # Run BFS until all nodes explored
+    while (len(stack) != 0):
+        # Use currNode and parentNode to track BFS state
+        next = stack.pop()
+        currNode, parentNode = next[0], next[1]
+
+        visited.append(currNode)
+        parents[currNode] = parentNode
+
+        if (currNode == goal_node):
+            break
+
+        for neighbor in currNode.neighbors:
+            if (neighbor not in visited and (neighbor, currNode) not in stack):
+                stack.append((neighbor, currNode))
+    
+    if currNode != goal_node:
+        return None
+    
+    # Reconstruct path
+    return reconstruct_path(goal_node, parents)
 
 
 ###############################################################################
@@ -203,16 +226,57 @@ def astar(start_node, goal_node):
       3. g_score[node] is the cost from start_node to node.
       4. Expand the node with the smallest f_score, update neighbors if a better path is found.
     """
-    # TODO: Implement A*
-    return None
+    if (start_node == None or goal_node == None):
+        return None
+    
+    pq = []
+    gscore = {(0, 0): manhattan_distance(start_node, start_node)}
+    fscore = {(0, 0): manhattan_distance(start_node, goal_node)}
+    heapq.heappush(pq, (fscore[(0, 0)], start_node, None))
+    visited = []
+    parents = {}
+    
+    # Run A* until all nodes explored or goal found
+    while (len(pq) != 0):
+        # Use currNode and parentNode to track BFS state
+        next = heapq.heappop(pq)
+        cost, currNode, parentNode = next[0], next[1], next[2]
+
+        visited.append(currNode)
+        parents[currNode] = parentNode
+
+        if (currNode == goal_node):
+            break
+
+        # g_score = parent's g_score + 1 step
+        g_score = gscore[currNode.value] + 1
+
+        for neighbor in currNode.neighbors:
+            f_score = g_score + manhattan_distance(neighbor, goal_node)
+            # Update gscore and fscore disctionaries accordingly as needed
+            if (neighbor.value not in fscore.keys() or f_score < fscore[neighbor.value]):
+                gscore[neighbor.value] = g_score
+                fscore[neighbor.value] = f_score
+
+            if (neighbor not in visited):
+                tuple = (fscore[neighbor.value], neighbor, currNode)
+                if (tuple not in pq):
+                    heapq.heappush(pq, tuple)
+        #time.sleep(0.1)
+    
+    if currNode != goal_node:
+        return None
+
+    # Reconstruct path
+    return reconstruct_path(goal_node, parents)
 
 def manhattan_distance(node_a, node_b):
     """
     Helper: Manhattan distance between node_a.value and node_b.value 
     if they are (row, col) pairs.
     """
-    # TODO: Return |r1 - r2| + |c1 - c2|
-    return 0
+    return abs(node_a.value[0] - node_b.value[0]) \
+         + abs(node_a.value[1] - node_b.value[1])
 
 
 ###############################################################################
@@ -229,8 +293,61 @@ def bidirectional_search(start_node, goal_node):
       2. Alternate expansions between these two queues.
       3. If the frontiers intersect, reconstruct the path by combining partial paths.
     """
-    # TODO: Implement bidirectional search
-    return None
+    if (start_node == None or goal_node == None):
+        return None
+    
+    qStart = []
+    qGoal = []
+    vStart = []
+    vGoal = []
+    parentStart = {}
+    parentGoal = {}
+    qStart.append((start_node, None))
+    qGoal.append((goal_node, None))
+    connecting = None
+
+    # Run Double BFS until all nodes explored or path found
+    while (len(qStart) != 0 and len(qGoal) != 0):
+        # Pop from both queues
+        nextStart = qStart.pop(0)
+        nextGoal = qGoal.pop(0)
+
+        # Grab current nodes and parents from both BFS
+        currStart, pStart = nextStart[0], nextStart[1]
+        currGoal, pGoal = nextGoal[0], nextGoal[1]
+
+        # Append current nodes to respective visited lists
+        vStart.append(currStart)
+        vGoal.append(currGoal)
+
+        # Track parents
+        parentStart[currStart] = pStart
+        parentGoal[currGoal] = pGoal
+
+        if (currStart in vGoal):
+            connecting = currStart
+            break
+        elif (currGoal in vStart):
+            connecting = currGoal
+            break
+
+        for neighborStart in currStart.neighbors:
+            if (neighborStart not in vStart and (neighborStart, currStart) not in qStart):
+                qStart.append((neighborStart, currStart))
+        
+        for neighborGoal in currGoal.neighbors:
+            if (neighborGoal not in vGoal and (neighborGoal, currGoal) not in qGoal):
+                qGoal.append((neighborGoal, currGoal))
+    
+    if (connecting == None):
+        return None
+    
+    # Reconstruct path
+    fromStart = reconstruct_path(connecting, parentStart)
+    fromGoal = reconstruct_path(connecting, parentGoal)
+    fromGoal.reverse()
+    path = fromStart + fromGoal
+    return path
 
 
 ###############################################################################
@@ -269,8 +386,15 @@ def reconstruct_path(end_node, parent_map):
       1. Start with end_node, follow parent_map[node] until None.
       2. Collect node.value, reverse the list, return it.
     """
-    # TODO: Implement path reconstruction
-    return None
+    path = []
+    path.append(end_node.value)
+    currNode = end_node
+    while (parent_map[currNode] != None):
+        prevNode = parent_map[currNode]
+        path.append(prevNode.value)
+        currNode = prevNode
+    path.reverse()
+    return path
 
 
 ###############################################################################
