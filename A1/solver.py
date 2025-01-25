@@ -146,7 +146,6 @@ def bfs(start_node, goal_node):
         # Use currNode and parentNode to track BFS state
         next = queue.pop(0)
         currNode, parentNode = next[0], next[1]
-        print(currNode.value)
 
         visited.append(currNode)
         parents[currNode] = parentNode
@@ -367,8 +366,47 @@ def simulated_annealing(start_node, goal_node, temperature=1.0, cooling_rate=0.9
       3. If next_cost < current_cost, move. Otherwise, move with probability e^(-cost_diff / temperature).
       4. Decrease temperature each step by cooling_rate until below min_temperature or we reach goal_node.
     """
-    # TODO: Implement simulated annealing
-    return None
+
+    if (start_node == None or goal_node == None):
+        return None
+
+    parents = {(start_node.value): None}
+    max_iter = 1000
+    curr = start_node
+    cost = manhattan_distance(curr, goal_node)
+    path = [start_node.value]
+
+    for i in range(max_iter):
+        # Break if no neighbors
+        if (len(curr.neighbors) == 0):
+            break
+
+        # Select random neighbor of current node
+        neighbor_idx = random.randint(0, len(curr.neighbors)-1)
+        neighbor = curr.neighbors[neighbor_idx]
+
+        # Compute neighbor's cost
+        next_cost = manhattan_distance(neighbor, goal_node)
+
+        # Move if cost is lower or with probability e^(-cost_diff / temperature)
+        if (next_cost < cost or random.random() <= math.exp(-1*(cost - next_cost)/temperature)):
+            # Track prevNode for neighbor
+            parents[neighbor] = curr
+            path.append(neighbor.value)
+            curr = neighbor
+            cost = next_cost
+        
+        if (curr == goal_node):
+            break
+        
+        # Reduce temperature
+        if (temperature >= min_temperature):
+            temperature -= cooling_rate
+    
+    if (curr != goal_node):
+        return None
+
+    return path
 
 
 ###############################################################################
@@ -415,13 +453,9 @@ if __name__ == "__main__":
 
     # Parse into an undirected graph
     nodes_dict, start_node, goal_node = parse_maze_to_graph(maze_data)
-    print("Created graph with", len(nodes_dict), "nodes.")
-    print("Start Node:", start_node)
-    print("Goal Node :", goal_node)
 
     # Test BFS (will return None until implemented)
     path_bfs = bfs(start_node, goal_node)
-    print("BFS Path:", path_bfs)
 
     # Similarly test DFS, A*, etc.
     # path_dfs = dfs(start_node, goal_node)

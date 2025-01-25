@@ -1,0 +1,411 @@
+pygame 2.6.1 (SDL 2.28.4, Python 3.12.6)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+Using Simulated_annealing
+i: 0, temperature: 0.010000000000000009
+i: 1, temperature: -0.98
+i: 2, temperature: -0.98
+i: 3, temperature: -0.98
+i: 4, temperature: -0.98
+i: 5, temperature: -0.98
+i: 6, temperature: -0.98
+i: 7, temperature: -0.98
+i: 8, temperature: -0.98
+i: 9, temperature: -0.98
+i: 10, temperature: -0.98
+i: 11, temperature: -0.98
+i: 12, temperature: -0.98
+i: 13, temperature: -0.98
+i: 14, temperature: -0.98
+i: 15, temperature: -0.98
+i: 16, temperature: -0.98
+i: 17, temperature: -0.98
+i: 18, temperature: -0.98
+i: 19, temperature: -0.98
+i: 20, temperature: -0.98
+i: 21, temperature: -0.98
+i: 22, temperature: -0.98
+i: 23, temperature: -0.98
+i: 24, temperature: -0.98
+i: 25, temperature: -0.98
+i: 26, temperature: -0.98
+i: 27, temperature: -0.98
+i: 28, temperature: -0.98
+i: 29, temperature: -0.98
+i: 30, temperature: -0.98
+i: 31, temperature: -0.98
+i: 32, temperature: -0.98
+i: 33, temperature: -0.98
+i: 34, temperature: -0.98
+i: 35, temperature: -0.98
+i: 36, temperature: -0.98
+i: 37, temperature: -0.98
+i: 38, temperature: -0.98
+i: 39, temperature: -0.98
+i: 40, temperature: -0.98
+i: 41, temperature: -0.98
+i: 42, temperature: -0.98
+i: 43, temperature: -0.98
+i: 44, temperature: -0.98
+i: 45, temperature: -0.98
+i: 46, temperature: -0.98
+i: 47, temperature: -0.98
+i: 48, temperature: -0.98
+i: 49, temperature: -0.98
+i: 50, temperature: -0.98
+i: 51, temperature: -0.98
+i: 52, temperature: -0.98
+i: 53, temperature: -0.98
+i: 54, temperature: -0.98
+i: 55, temperature: -0.98
+i: 56, temperature: -0.98
+i: 57, temperature: -0.98
+i: 58, temperature: -0.98
+i: 59, temperature: -0.98
+i: 60, temperature: -0.98
+i: 61, temperature: -0.98
+i: 62, temperature: -0.98
+i: 63, temperature: -0.98
+i: 64, temperature: -0.98
+i: 65, temperature: -0.98
+i: 66, temperature: -0.98
+i: 67, temperature: -0.98
+i: 68, temperature: -0.98
+i: 69, temperature: -0.98
+i: 70, temperature: -0.98
+i: 71, temperature: -0.98
+i: 72, temperature: -0.98
+i: 73, temperature: -0.98
+i: 74, temperature: -0.98
+i: 75, temperature: -0.98
+i: 76, temperature: -0.98
+i: 77, temperature: -0.98
+i: 78, temperature: -0.98
+i: 79, temperature: -0.98
+i: 80, temperature: -0.98
+i: 81, temperature: -0.98
+i: 82, temperature: -0.98
+i: 83, temperature: -0.98
+i: 84, temperature: -0.98
+i: 85, temperature: -0.98
+i: 86, temperature: -0.98
+i: 87, temperature: -0.98
+i: 88, temperature: -0.98
+i: 89, temperature: -0.98
+i: 90, temperature: -0.98
+i: 91, temperature: -0.98
+i: 92, temperature: -0.98
+i: 93, temperature: -0.98
+i: 94, temperature: -0.98
+i: 95, temperature: -0.98
+i: 96, temperature: -0.98
+i: 97, temperature: -0.98
+i: 98, temperature: -0.98
+i: 99, temperature: -0.98
+i: 100, temperature: -0.98
+i: 101, temperature: -0.98
+i: 102, temperature: -0.98
+i: 103, temperature: -0.98
+i: 104, temperature: -0.98
+i: 105, temperature: -0.98
+i: 106, temperature: -0.98
+i: 107, temperature: -0.98
+i: 108, temperature: -0.98
+i: 109, temperature: -0.98
+i: 110, temperature: -0.98
+i: 111, temperature: -0.98
+i: 112, temperature: -0.98
+i: 113, temperature: -0.98
+i: 114, temperature: -0.98
+i: 115, temperature: -0.98
+i: 116, temperature: -0.98
+i: 117, temperature: -0.98
+i: 118, temperature: -0.98
+i: 119, temperature: -0.98
+i: 120, temperature: -0.98
+i: 121, temperature: -0.98
+i: 122, temperature: -0.98
+i: 123, temperature: -0.98
+i: 124, temperature: -0.98
+i: 125, temperature: -0.98
+i: 126, temperature: -0.98
+i: 127, temperature: -0.98
+i: 128, temperature: -0.98
+i: 129, temperature: -0.98
+i: 130, temperature: -0.98
+i: 131, temperature: -0.98
+i: 132, temperature: -0.98
+i: 133, temperature: -0.98
+i: 134, temperature: -0.98
+i: 135, temperature: -0.98
+i: 136, temperature: -0.98
+i: 137, temperature: -0.98
+i: 138, temperature: -0.98
+i: 139, temperature: -0.98
+i: 140, temperature: -0.98
+i: 141, temperature: -0.98
+i: 142, temperature: -0.98
+i: 143, temperature: -0.98
+i: 144, temperature: -0.98
+i: 145, temperature: -0.98
+i: 146, temperature: -0.98
+i: 147, temperature: -0.98
+i: 148, temperature: -0.98
+i: 149, temperature: -0.98
+i: 150, temperature: -0.98
+i: 151, temperature: -0.98
+i: 152, temperature: -0.98
+i: 153, temperature: -0.98
+i: 154, temperature: -0.98
+i: 155, temperature: -0.98
+i: 156, temperature: -0.98
+i: 157, temperature: -0.98
+i: 158, temperature: -0.98
+i: 159, temperature: -0.98
+i: 160, temperature: -0.98
+i: 161, temperature: -0.98
+i: 162, temperature: -0.98
+i: 163, temperature: -0.98
+i: 164, temperature: -0.98
+i: 165, temperature: -0.98
+i: 166, temperature: -0.98
+i: 167, temperature: -0.98
+i: 168, temperature: -0.98
+i: 169, temperature: -0.98
+i: 170, temperature: -0.98
+i: 171, temperature: -0.98
+i: 172, temperature: -0.98
+i: 173, temperature: -0.98
+i: 174, temperature: -0.98
+i: 175, temperature: -0.98
+i: 176, temperature: -0.98
+i: 177, temperature: -0.98
+i: 178, temperature: -0.98
+i: 179, temperature: -0.98
+i: 180, temperature: -0.98
+i: 181, temperature: -0.98
+i: 182, temperature: -0.98
+i: 183, temperature: -0.98
+i: 184, temperature: -0.98
+i: 185, temperature: -0.98
+i: 186, temperature: -0.98
+i: 187, temperature: -0.98
+i: 188, temperature: -0.98
+i: 189, temperature: -0.98
+i: 190, temperature: -0.98
+i: 191, temperature: -0.98
+i: 192, temperature: -0.98
+i: 193, temperature: -0.98
+i: 194, temperature: -0.98
+i: 195, temperature: -0.98
+i: 196, temperature: -0.98
+i: 197, temperature: -0.98
+i: 198, temperature: -0.98
+i: 199, temperature: -0.98
+i: 200, temperature: -0.98
+i: 201, temperature: -0.98
+i: 202, temperature: -0.98
+i: 203, temperature: -0.98
+i: 204, temperature: -0.98
+i: 205, temperature: -0.98
+i: 206, temperature: -0.98
+i: 207, temperature: -0.98
+i: 208, temperature: -0.98
+i: 209, temperature: -0.98
+i: 210, temperature: -0.98
+i: 211, temperature: -0.98
+i: 212, temperature: -0.98
+i: 213, temperature: -0.98
+i: 214, temperature: -0.98
+i: 215, temperature: -0.98
+i: 216, temperature: -0.98
+i: 217, temperature: -0.98
+i: 218, temperature: -0.98
+i: 219, temperature: -0.98
+i: 220, temperature: -0.98
+i: 221, temperature: -0.98
+i: 222, temperature: -0.98
+i: 223, temperature: -0.98
+i: 224, temperature: -0.98
+i: 225, temperature: -0.98
+i: 226, temperature: -0.98
+i: 227, temperature: -0.98
+i: 228, temperature: -0.98
+i: 229, temperature: -0.98
+i: 230, temperature: -0.98
+i: 231, temperature: -0.98
+i: 232, temperature: -0.98
+i: 233, temperature: -0.98
+i: 234, temperature: -0.98
+i: 235, temperature: -0.98
+i: 236, temperature: -0.98
+i: 237, temperature: -0.98
+i: 238, temperature: -0.98
+i: 239, temperature: -0.98
+i: 240, temperature: -0.98
+i: 241, temperature: -0.98
+i: 242, temperature: -0.98
+i: 243, temperature: -0.98
+i: 244, temperature: -0.98
+i: 245, temperature: -0.98
+i: 246, temperature: -0.98
+i: 247, temperature: -0.98
+i: 248, temperature: -0.98
+i: 249, temperature: -0.98
+i: 250, temperature: -0.98
+i: 251, temperature: -0.98
+i: 252, temperature: -0.98
+i: 253, temperature: -0.98
+i: 254, temperature: -0.98
+i: 255, temperature: -0.98
+i: 256, temperature: -0.98
+i: 257, temperature: -0.98
+i: 258, temperature: -0.98
+i: 259, temperature: -0.98
+i: 260, temperature: -0.98
+i: 261, temperature: -0.98
+i: 262, temperature: -0.98
+i: 263, temperature: -0.98
+i: 264, temperature: -0.98
+i: 265, temperature: -0.98
+i: 266, temperature: -0.98
+i: 267, temperature: -0.98
+i: 268, temperature: -0.98
+i: 269, temperature: -0.98
+i: 270, temperature: -0.98
+i: 271, temperature: -0.98
+i: 272, temperature: -0.98
+i: 273, temperature: -0.98
+i: 274, temperature: -0.98
+i: 275, temperature: -0.98
+i: 276, temperature: -0.98
+i: 277, temperature: -0.98
+i: 278, temperature: -0.98
+i: 279, temperature: -0.98
+i: 280, temperature: -0.98
+i: 281, temperature: -0.98
+i: 282, temperature: -0.98
+i: 283, temperature: -0.98
+i: 284, temperature: -0.98
+i: 285, temperature: -0.98
+i: 286, temperature: -0.98
+i: 287, temperature: -0.98
+i: 288, temperature: -0.98
+i: 289, temperature: -0.98
+i: 290, temperature: -0.98
+i: 291, temperature: -0.98
+i: 292, temperature: -0.98
+i: 293, temperature: -0.98
+i: 294, temperature: -0.98
+i: 295, temperature: -0.98
+i: 296, temperature: -0.98
+i: 297, temperature: -0.98
+i: 298, temperature: -0.98
+i: 299, temperature: -0.98
+i: 300, temperature: -0.98
+i: 301, temperature: -0.98
+i: 302, temperature: -0.98
+i: 303, temperature: -0.98
+i: 304, temperature: -0.98
+i: 305, temperature: -0.98
+i: 306, temperature: -0.98
+i: 307, temperature: -0.98
+i: 308, temperature: -0.98
+i: 309, temperature: -0.98
+i: 310, temperature: -0.98
+i: 311, temperature: -0.98
+i: 312, temperature: -0.98
+i: 313, temperature: -0.98
+i: 314, temperature: -0.98
+i: 315, temperature: -0.98
+i: 316, temperature: -0.98
+i: 317, temperature: -0.98
+i: 318, temperature: -0.98
+goal found
+exit loop, curr = Node((24, 24))
+(0, 0) -> None
+Node((1, 0)) -> Node((0, 0))
+Node((0, 0)) -> Node((1, 0))
+Node((1, 1)) -> Node((0, 1))
+Node((0, 1)) -> Node((1, 1))
+Node((2, 1)) -> Node((1, 1))
+Node((2, 2)) -> Node((2, 1))
+Node((3, 2)) -> Node((2, 2))
+Node((4, 2)) -> Node((5, 2))
+Node((5, 2)) -> Node((4, 2))
+Node((5, 1)) -> Node((5, 2))
+Node((6, 1)) -> Node((6, 0))
+Node((7, 1)) -> Node((6, 1))
+Node((5, 0)) -> Node((5, 1))
+Node((6, 0)) -> Node((5, 0))
+Node((8, 1)) -> Node((8, 0))
+Node((8, 0)) -> Node((8, 1))
+Node((7, 0)) -> Node((8, 0))
+Node((9, 0)) -> Node((8, 0))
+Node((9, 1)) -> Node((8, 1))
+Node((9, 2)) -> Node((9, 1))
+Node((9, 3)) -> Node((9, 2))
+Node((9, 4)) -> Node((9, 3))
+Node((10, 4)) -> Node((10, 3))
+Node((10, 3)) -> Node((10, 4))
+Node((10, 5)) -> Node((11, 5))
+Node((11, 5)) -> Node((11, 6))
+Node((11, 6)) -> Node((11, 5))
+Node((11, 4)) -> Node((11, 5))
+Node((12, 4)) -> Node((11, 4))
+Node((12, 3)) -> Node((12, 4))
+Node((13, 3)) -> Node((12, 3))
+Node((14, 3)) -> Node((13, 3))
+Node((14, 2)) -> Node((14, 3))
+Node((14, 1)) -> Node((14, 0))
+Node((15, 1)) -> Node((15, 0))
+Node((15, 0)) -> Node((14, 0))
+Node((14, 0)) -> Node((15, 0))
+Node((16, 1)) -> Node((15, 1))
+Node((17, 1)) -> Node((18, 1))
+Node((18, 1)) -> Node((17, 1))
+Node((17, 2)) -> Node((17, 1))
+Node((18, 2)) -> Node((18, 1))
+Node((19, 2)) -> Node((18, 2))
+Node((19, 3)) -> Node((20, 3))
+Node((20, 3)) -> Node((19, 3))
+Node((19, 4)) -> Node((19, 3))
+Node((20, 4)) -> Node((19, 4))
+Node((21, 4)) -> Node((20, 4))
+Node((21, 5)) -> Node((21, 6))
+Node((21, 6)) -> Node((21, 5))
+Node((20, 6)) -> Node((20, 7))
+Node((20, 7)) -> Node((20, 6))
+Node((20, 8)) -> Node((19, 8))
+Node((19, 8)) -> Node((20, 8))
+Node((21, 7)) -> Node((20, 7))
+Node((22, 7)) -> Node((21, 7))
+Node((23, 7)) -> Node((24, 7))
+Node((23, 6)) -> Node((23, 7))
+Node((24, 7)) -> Node((24, 8))
+Node((24, 8)) -> Node((24, 7))
+Node((24, 9)) -> Node((24, 8))
+Node((24, 10)) -> Node((24, 9))
+Node((24, 11)) -> Node((24, 10))
+Node((24, 12)) -> Node((24, 11))
+Node((24, 13)) -> Node((24, 12))
+Node((24, 14)) -> Node((23, 14))
+Node((23, 14)) -> Node((24, 14))
+Node((24, 15)) -> Node((24, 14))
+Node((24, 16)) -> Node((24, 17))
+Node((23, 16)) -> Node((23, 17))
+Node((24, 17)) -> Node((24, 18))
+Node((23, 17)) -> Node((23, 16))
+Node((23, 18)) -> Node((24, 18))
+Node((22, 18)) -> Node((23, 18))
+Node((24, 18)) -> Node((24, 19))
+Node((23, 19)) -> Node((24, 19))
+Node((24, 19)) -> Node((24, 18))
+Node((23, 20)) -> Node((24, 20))
+Node((24, 20)) -> Node((24, 19))
+Node((23, 21)) -> Node((23, 22))
+Node((23, 22)) -> Node((22, 22))
+Node((24, 22)) -> Node((23, 22))
+Node((22, 22)) -> Node((23, 22))
+Node((23, 23)) -> Node((23, 22))
+Node((23, 24)) -> Node((23, 23))
+Node((24, 24)) -> Node((23, 24))
