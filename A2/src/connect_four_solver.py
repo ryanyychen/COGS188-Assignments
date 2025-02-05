@@ -14,9 +14,7 @@ def create_board():
     np.ndarray:
         A 2D numpy array of shape (ROW_COUNT, COLUMN_COUNT) filled with zeros (float).
     """
-    # TODO: implement
-    pass
-
+    return np.zeros((ROW_COUNT, COLUMN_COUNT))
 
 def drop_piece(board, row, col, piece):
     """
@@ -31,8 +29,7 @@ def drop_piece(board, row, col, piece):
     Returns:
     None. The 'board' is modified in-place. Do NOT return a new board!
     """
-    # TODO: implement
-    pass
+    board[row][col] = piece
 
 
 def is_valid_location(board, col):
@@ -46,8 +43,10 @@ def is_valid_location(board, col):
     Returns:
     bool: True if it's valid to drop a piece in this column, False otherwise.
     """
-    # TODO: implement
-    pass
+    for row in range(len(board)):
+        if board[row][col] == 0:
+            return True
+    return False
 
 
 def get_next_open_row(board, col):
@@ -61,8 +60,11 @@ def get_next_open_row(board, col):
     Returns:
     int: The row index of the lowest empty cell in this column.
     """
-    # TODO: implement
-    pass
+    row = -1
+    for r in range(len(board) - 1, -1, -1):
+        if board[r][col] == 0:
+            row = r
+    return row
 
 
 def winning_move(board, piece):
@@ -77,8 +79,32 @@ def winning_move(board, piece):
     bool: True if 'piece' has a winning 4 in a row, False otherwise.
     This requires checking horizontally, vertically, and diagonally.
     """
-    # TODO: implement
-    pass
+    board_rows = len(board)
+    board_cols = len(board[1])
+    # Check horizontal locations
+    for r in range(board_rows):
+        for c in range(board_cols - 3):
+            if board[r][c] == piece and board[r][c + 1] == piece and board[r][c + 2] == piece and board[r][c + 3] == piece:
+                return True
+
+    # Check vertical locations
+    for r in range(board_rows - 3):
+        for c in range(board_cols):
+            if board[r][c] == piece and board[r + 1][c] == piece and board[r + 2][c] == piece and board[r + 3][c] == piece:
+                return True
+
+    # Check diagonals
+    for r in range(board_rows - 3):
+        for c in range(board_cols - 3):
+            if board[r][c] == piece and board[r + 1][c + 1] == piece and board[r + 2][c + 2] == piece and board[r + 3][c + 3] == piece:
+                return True
+
+    for r in range(board_rows - 3):
+        for c in range(3, board_cols):
+            if board[r][c] == piece and board[r + 1][c - 1] == piece and board[r + 2][c - 2] == piece and board[r + 3][c - 3] == piece:
+                return True
+
+    return False
 
 
 def get_valid_locations(board):
@@ -91,8 +117,11 @@ def get_valid_locations(board):
     Returns:
     list of int: The list of column indices that are not full.
     """
-    # TODO: implement
-    pass
+    valid_cols = []
+    for col in range(len(board[0])):
+        if is_valid_location(board, col):
+            valid_cols.append(col)
+    return valid_cols
 
 
 def is_terminal_node(board):
@@ -107,8 +136,9 @@ def is_terminal_node(board):
     Returns:
     bool: True if the game is over, False otherwise.
     """
-    # TODO: implement
-    pass
+    if (winning_move(board, 1) or winning_move(board, 2) or len(get_valid_locations(board)) == 0):
+        return True
+    return False
 
 
 def score_position(board, piece):
@@ -151,8 +181,62 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
           column: The chosen column index (None if no moves).
           score: The heuristic score of the board state.
     """
-    # TODO: implement
-    pass
+    valid_locations = get_valid_locations(board)
+    terminal = is_terminal_node(board)
+
+    if depth == 0 or terminal:
+        if terminal:
+            if winning_move(board, 2):
+                return (None, math.inf)
+            elif winning_move(board, 1):
+                return (None, -math.inf)
+            else:
+                return (None, 0)  # No valid moves left, game over
+        else:
+            return (None, score_position(board, 2))  # Score board at max depth
+
+    # AI's turn
+    if maximizingPlayer:
+        value = -math.inf
+        column = random.choice(valid_locations)
+        for col in valid_locations:
+            row = get_next_open_row(board, col)
+            temp_board = board.copy()
+            drop_piece(temp_board, row, col, 2)
+            # Calculate the score after dropping the piece
+            new_score = minimax(temp_board, depth - 1, alpha, beta, False)[1]
+            # If score if better than current value, update value and track column (maximizer)
+            if new_score > value:
+                value = new_score
+                column = col
+            # New alpha equal to max of current alpha and value
+            alpha = max(alpha, value)
+            # Pruning, no need to explore here
+            # Minimizer will not allow this to happen
+            if alpha >= beta:
+                break
+        return column, value
+
+    else:
+        value = math.inf
+        column = random.choice(valid_locations)
+        for col in valid_locations:
+            row = get_next_open_row(board, col)
+            temp_board = board.copy()
+            drop_piece(temp_board, row, col, 1)
+            # Calculate the score after dropping the piece
+            new_score = minimax(temp_board, depth - 1, alpha, beta, True)[1]
+            # If score if worse than current value, update value and track column (minimizer)
+            if new_score < value:
+                value = new_score
+                column = col
+            # New beta equal to min of current beta and
+            beta = min(beta, value)
+            # Pruning, no need to explore here
+            # Maximizer will not choose this
+            if beta <= alpha:
+                break
+        return column, value
 
 
 if __name__ == "__main__":

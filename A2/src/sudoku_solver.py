@@ -39,8 +39,11 @@ def find_empty_cell(board):
         - If there is an empty cell, returns (row_index, col_index).
         - If there are no empty cells, returns None.
     """
-    # TODO: implement
-    pass
+    for row in range(len(board)):
+        for col in range(len(board[0])):
+            if board[row][col] == 0:
+                return (row, col)
+    return None
 
 
 def is_valid(board, row, col, num):
@@ -59,8 +62,23 @@ def is_valid(board, row, col, num):
     Returns:
     bool: True if valid, False otherwise.
     """
-    # TODO: implement
-    pass
+    # Check row
+    if num in board[row]:
+        return False
+
+    # Check column
+    if num in [board[r][col] for r in range(9)]:
+        return False
+
+    # Check sub-box
+    sub_box_row = row // 3
+    sub_box_col = col // 3
+    for r in range(sub_box_row * 3, (sub_box_row + 1) * 3):
+        for c in range(sub_box_col * 3, (sub_box_col + 1) * 3):
+            if board[r][c] == num:
+                return False
+
+    return True
 
 
 def solve_sudoku(board):
@@ -75,8 +93,23 @@ def solve_sudoku(board):
         - True if the puzzle is solved successfully.
         - False if the puzzle is unsolvable.
     """
-    # TODO: implement
-    pass
+    # Check for need to place a number
+    empty_cell = find_empty_cell(board)
+    if empty_cell is None:
+        return True
+
+    row, col = empty_cell
+    # Try each possible number
+    for num in range(1, 10):
+        # Place number if valid
+        if is_valid(board, row, col, num):
+            board[row][col] = num
+            # Check whether to accept number, else backtrack
+            if solve_sudoku(board):
+                return True
+            board[row][col] = 0
+
+    return False
 
 
 def is_solved_correctly(board):
@@ -92,8 +125,25 @@ def is_solved_correctly(board):
     Returns:
     bool: True if the board is correctly solved, False otherwise.
     """
-    # TODO: implement
-    pass
+    all_nums = [num for num in range(1, 10)]
+    # Check rows
+    for row in board:
+        if sorted(row) != all_nums:
+            return False
+
+    # Check columns
+    for col in range(9):
+        if sorted([board[row][col] for row in range(9)]) != all_nums:
+            return False
+
+    # Check sub-boxes
+    for i in range(0, 9, 3):
+        for j in range(0, 9, 3):
+            sub_box = [board[r][c] for r in range(i, i + 3) for c in range(j, j + 3)]
+            if sorted(sub_box) != all_nums:
+                return False
+
+    return True
 
 
 if __name__ == "__main__":
