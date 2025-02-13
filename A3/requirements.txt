@@ -1,0 +1,6 @@
+mujoco
+dm_control
+tk
+matplotlib
+numpy
+tqdm
