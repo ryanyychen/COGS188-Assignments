@@ -52,4 +52,9 @@ After you're done, run the Jupyter Notebook (`racecar.ipynb`) to visualize the r
 
 ### Submission
 
-Submit `dp.py` and `montecarlo.py` with completed functions.
+Submit:
+* `dp.py` 
+* `montecarlo.py`
+* `racecar.ipynb`
+
+In `racecar.ipynb`, you are free to add any additional code to help you visualize the results of your implementation. But at the minimum, it should include all the plots that were provided in the starter code.
