@@ -52,6 +52,7 @@ class DynamicProgramming:
         for state in self.all_states:
             self.value_function[state] = 0.0
     
+
     def policy_evaluation(self):
         """
         Evaluate the current policy by iteratively updating the value function.
@@ -61,8 +62,22 @@ class DynamicProgramming:
         Returns:
             None
         """
-        # TODO: Implement policy evaluation using iterative updates
-        pass
+        while True:
+            delta = 0
+            for state in self.all_states:
+                # Simulate taking an action from current state according to policy
+                reward, new_state = self._simulate_action(state, self.policy[state])
+
+                # Calculate change in value function
+                val_update = reward + self.gamma * self.value_function[new_state]
+                delta = max(delta, val_update - self.value_function[state])
+
+                # Update value function
+                self.value_function[state] = val_update
+
+            # Stop if delta < theta
+            if delta < self.theta:
+                break
     
     def policy_improvement(self):
         """
@@ -71,8 +86,32 @@ class DynamicProgramming:
         Returns:
             bool: True if the policy is stable (no changes), False otherwise.
         """
-        # TODO: Implement policy improvement by choosing the best action
-        pass
+        policy_stable = True
+        for state in self.all_states:
+            # Track current action
+            old_action = self.policy[state]
+            best_action = None
+            best_value = float('-inf')
+
+            # Check all possible actions
+            for action in range(self.env.n_actions):
+                # Simulate taking an action from current state
+                reward, new_state = self._simulate_action(state, action)
+                value = reward + self.gamma * self.value_function[new_state]
+
+                # Update action if value is better
+                if value > best_value:
+                    best_value = value
+                    best_action = action
+
+            # Update policy's action for current state
+            self.policy[state] = best_action
+
+            # Trigger policy_stable if action changed
+            if old_action != best_action:
+                policy_stable = False
+
+        return policy_stable
     
     def policy_iteration(self):
         """
@@ -84,8 +123,10 @@ class DynamicProgramming:
         Returns:
             None
         """
-        # TODO: Implement Policy Iteration
-        pass
+        policy_converged = False
+        while not policy_converged:
+            self.policy_evaluation()
+            policy_converged = self.policy_improvement()
     
     def value_iteration(self):
         """
@@ -96,8 +137,39 @@ class DynamicProgramming:
         Returns:
             None
         """
-        # TODO: Implement Value Iteration
-        pass
+        for _ in range(self.max_iterations):
+            for state in self.all_states:
+                old_value = self.value_function[state]
+                best_value = float('-inf')
+
+                # Check all actions from state
+                for action in range(self.env.n_actions):
+                    reward, new_state = self._simulate_action(state, action)
+                    value = reward + self.gamma * self.value_function[new_state]
+
+                    # Select best value
+                    best_value = max(best_value, value)
+                
+                # Update value function with best value
+                self.value_function[state] = best_value
+        
+        # Extract optimal policy
+        for state in self.all_states:
+            best_action = None
+            best_value = float('-inf')
+
+            # Check all actions from state
+            for action in range(self.env.n_actions):
+                reward, new_state = self._simulate_action(state, action)
+                value = reward + self.gamma * self.value_function[new_state]
+
+                # Select best action
+                if value > best_value:
+                    best_value = value
+                    best_action = action
+            
+            # Update policy with best action
+            self.policy[state] = best_action
     
     def _simulate_action(self, state, action):
         """
