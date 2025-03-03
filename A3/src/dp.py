@@ -139,7 +139,6 @@ class DynamicProgramming:
         """
         for _ in range(self.max_iterations):
             for state in self.all_states:
-                old_value = self.value_function[state]
                 best_value = float('-inf')
 
                 # Check all actions from state
