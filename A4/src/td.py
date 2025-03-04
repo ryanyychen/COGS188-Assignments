@@ -15,8 +15,16 @@ def initialize_q_table(state_bins: dict, action_bins: list) -> np.ndarray:
     Returns:
         np.ndarray: A Q-table initialized to zeros with dimensions matching the state and action space.
     """
-    # TODO: Implement this function
-    ...
+    # States (keys) = state_bins[position][0][2] * state_bins[position][1][2] * state_bins[position][2][2] *
+    #                   state_bins[velocity][0][2] * state_bins[velocity][1][2]
+    # Actions = len(action_bins)
+    pos_1 = len(state_bins['position'][0])
+    pos_2 = len(state_bins['position'][1])
+    pos_3 = len(state_bins['position'][2])
+    vel_1 = len(state_bins['velocity'][0])
+    vel_2 = len(state_bins['velocity'][1])
+    q_table = np.zeros((pos_1, pos_2, pos_3, vel_1, vel_2, len(action_bins)))
+    return q_table
     
 
 
@@ -45,15 +53,30 @@ def td_learning(env: Environment, num_episodes: int, alpha: float, gamma: float,
 
     for episode in tqdm(range(num_episodes), desc="Training Episodes"):
         # reset env
-        
-        # run the episode
-            # select action
-            # take action
-            # quantize the next state
-            # update Q-table
-            # if it is the last timestep, break
-        # keep track of the reward
-        ...
+        timestep = env.reset()
+        while not timestep.last():
+            # Select Action
+            if np.random.rand() < epsilon:
+                action_id = np.random.randint(len(action_bins))
+            else:
+                action_id = greedy_policy(q_table)(quantize_state(timestep.observation, state_bins))
+            action = action_bins[action_id]
+            
+            # Save state before action
+            state = quantize_state(timestep.observation, state_bins)
+
+            # Take action
+            timestep = env.step(action)
+
+            # Update Q-table
+            reward = timestep.reward
+            
+            next_state = quantize_state(timestep.observation, state_bins)
+            max_next_reward_action = greedy_policy(q_table)(next_state)
+            q_table[state][action_id] += alpha * (reward + gamma * q_table[next_state][max_next_reward_action] - q_table[state][action_id])
+            
+            # Track rewards
+            rewards.append(reward)
 
     return q_table, rewards
 
